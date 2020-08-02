@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>question</title>
+
+    <link rel="stylesheet" th:href="@{/bootstrap/css/bootstrap.css}">
+    <script th:src="@{/bootstrap/js/query.js}"></script>
+    <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
+    <style>
+        .op-item-meat{
+            margin-right:50px;
+        }
+    </style>
+</head>
+<body>
+<div>[(${question.question_text})]</div>
+<p><div>[(${question.options})]</div></p>
+<p><div th:text="${question.channel_type_name}"></div></p>
+<p><div th:text="${question.exam_name}"></div></p>
+<p><div th:text="${question.difficult_name}"></div></p>
+<p><div th:text="${question.save_num}"></div></p>
+<img th:src="${question.answer}" alt="">
+<p>[考点]<img th:src="${question.knowledge}" alt=""></p>
+<img th:src="${question.explanation}" alt="">
+</body>
+</html>

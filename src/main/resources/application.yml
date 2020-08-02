@@ -1,0 +1,14 @@
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    username: root
+    password: haojun123
+    url: jdbc:mysql://cdb-8bby2x1k.cd.tencentcdb.com:10165/renjiao?serverTimezone=CTT&useUnicode=true&characterEncoding=utf-8&allowMultiQueries=true
+  thymeleaf:
+    cache: false
+server:
+  port: 8080
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: false
