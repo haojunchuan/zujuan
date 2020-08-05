@@ -8,20 +8,59 @@
     <script th:src="@{/bootstrap/js/query.js}"></script>
     <script th:src="@{/bootstrap/js/bootstrap.js}"></script>
     <style>
+        .question-box{
+            border: 1px black solid;
+            font-size: 15px;
+        }
         .op-item-meat{
             margin-right:50px;
+        }
+        .question-label{
+            font-size: 13px;
+            border-top: black 1px solid;
+        }
+
+        .question-label-value{
+            color: blue;
+        }
+        .answer-box{
+            border: 1px black solid;
+            display: none;
         }
     </style>
 </head>
 <body>
-<div>[(${question.question_text})]</div>
-<p><div>[(${question.options})]</div></p>
-<p><div th:text="${question.channel_type_name}"></div></p>
-<p><div th:text="${question.exam_name}"></div></p>
-<p><div th:text="${question.difficult_name}"></div></p>
-<p><div th:text="${question.save_num}"></div></p>
-<img th:src="${question.answer}" alt="">
-<p>[考点]<img th:src="${question.knowledge}" alt=""></p>
-<img th:src="${question.explanation}" alt="">
+<div class="row">
+    <div class="col-xs-6 col-md-2"></div>
+    <div class="col-xs-6 col-md-8">
+        <div class="question-box">
+            <div>[(${question.question_text})]</div>
+            <p ><div th:if="${question.options} ne 'None'">[(${question.options})]</div></p>
+            <div class="question-label">
+                <span class="question-label-name">题型：</span><span class="question-label-value" th:text="${question.channel_type_name}"></span>|
+                <span>题类：</span><sapn class="question-label-value" th:text="${question.exam_name}"></sapn>|
+                <span>难度：</span><sapn class="question-label-value" th:text="${question.difficult_name}"></sapn>|
+                <span>组卷次数:</span><sapn class="question-label-value" th:text="${question.save_num}"></sapn>
+            </div>
+        </div>
+        <div class="answer-box">
+            <div class="question-answer">
+                <span th:if="${question.question_channel_type} eq 1">【答案】</span><sapn>[(${question.answer})]</sapn>
+            </div>
+            <div class="question-knowledge">
+                【考点】<img th:src="${question.knowledge}" alt="">
+            </div>
+            <div class="question-explantion">
+                <img th:src="${question.explanation}" alt="">
+            </div>
+        </div>
+    </div>
+    <div class="col-xs-6 col-md-2"></div>
+</div>
 </body>
+<script >
+    $("div.question-box").click(function(){
+        $(".answer-box").fadeToggle();
+    });
+</script>
 </html>

@@ -1,6 +1,6 @@
 package com.hao.service.serviceImpl;
 
-import com.alibaba.fastjson.JSONObject;
+import com.hao.common.tools.DealwithQuestion;
 import com.hao.dao.QuestionDao;
 import com.hao.domain.Question;
 import com.hao.service.QuestionService;
@@ -20,24 +20,23 @@ public class QuestionServiceImpl implements QuestionService {
     @Override
     public Question getQuestionById(String id) {
         Question question=questionDao.selectById(id);
-        //处理选择
+
         if(question != null){
-            System.out.println(question.getQuestion_channel_type());
+            //处理单选题的选项
             if(question.getQuestion_channel_type().equals("1")){
-                Object option=question.getOptions();
-                JSONObject newOption = JSONObject.parseObject(option.toString());
-                StringBuffer option_=new StringBuffer();
-                option_.append("<span class=\"op-item\" w=\"112\" h=\"24\" style=\"width: 221px; margin-right: 0px; height: 24px; clear: none;\">");
-                newOption.forEach( (e,x) -> {
-                    String a="<span class=\"op-item-nut\" style=\"margin-top: 0px;\">"+e+" . </span>";
-                    String b="<span class=\"op-item-meat\" style=\"margin-top: 0px; white-space: normal;\">"+x+"</span>";
-                    option_.append(a+b);
-                });
-                option_.append("</span>");
-                question.setOptions(option_.toString());
+                String option=question.getOptions().toString();
+                String resOption= DealwithQuestion.dealwithOption(option);
+                question.setOptions(resOption);
+            }else{
+                //处理大题的题号问题
+                String questionText= question.getQuestion_text();
+                if(questionText.contains("==>")){
+                    questionText=DealwithQuestion.dealwithquestiontext(questionText);
+                    question.setQuestion_text(questionText);
+                }
             }
         }
-
+        question.setAnswer(DealwithQuestion.dealwithanser(question.getAnswer()));
         return question;
     }
 }
