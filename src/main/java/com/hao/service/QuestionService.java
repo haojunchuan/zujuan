@@ -1,6 +1,9 @@
 package com.hao.service;
 
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hao.domain.Question;
+
+import java.util.List;
 
 /**
  * @author jack hao
@@ -9,4 +12,7 @@ import com.hao.domain.Question;
 public interface QuestionService {
 //    通过id获取题干数据
     public Question getQuestionById(String id);
+
+    //通过章节ID获取该章节的所有试题信息（分页）
+    public Page<Question> pageGetQuestionByCateId(Integer pagenum, String cateid);
 }

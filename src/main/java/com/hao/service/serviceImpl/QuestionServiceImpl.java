@@ -1,5 +1,8 @@
 package com.hao.service.serviceImpl;
 
+import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
+import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
+import com.hao.common.Constant;
 import com.hao.common.tools.DealwithQuestion;
 import com.hao.dao.QuestionDao;
 import com.hao.domain.Question;
@@ -7,6 +10,7 @@ import com.hao.service.QuestionService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.List;
 
 /**
  * @author jack hao
@@ -39,4 +43,16 @@ public class QuestionServiceImpl implements QuestionService {
         question.setAnswer(DealwithQuestion.dealwithanser(question.getAnswer()));
         return question;
     }
+
+    @Override
+    public Page<Question> pageGetQuestionByCateId(Integer pagenum, String cateid) {
+        QueryWrapper<Question> wrapper=new QueryWrapper<>();
+        wrapper.eq("cateid",cateid);
+        Page<Question> page=new Page<>(pagenum, Constant.PAGE_SIZE);
+        Page<Question> questionPage = questionDao.selectPage(page, wrapper);
+        return questionPage;
+    }
+
+
+
 }
