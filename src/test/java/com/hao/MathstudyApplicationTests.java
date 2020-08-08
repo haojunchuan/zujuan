@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.hao.common.tools.DealwithQuestion;
 import com.hao.dao.QuestionDao;
 import com.hao.domain.Question;
+import com.hao.service.QuestionIndexService;
 import com.hao.service.QuestionService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,6 +22,9 @@ class MathstudyApplicationTests {
 
     @Resource
     private QuestionDao questionDao;
+
+    @Autowired
+    private QuestionIndexService questionIndexService;
 
     @Test
     void contextLoads() {
@@ -60,5 +64,11 @@ class MathstudyApplicationTests {
 //        for (Question q:questions) {
 //            System.out.println(DealwithQuestion.DealwithOneQuestion(q).toString());
 //        }
+    }
+
+    @Test
+    void test3(){
+//        List<String> strings = questionIndexService.selectIdByCate_page(1, "102676");
+//        System.out.println(strings.size());
     }
 }

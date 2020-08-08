@@ -15,4 +15,6 @@ public interface QuestionService {
 
     //通过章节ID获取该章节的所有试题信息（分页）
     public Page<Question> pageGetQuestionByCateId(Integer pagenum, String cateid);
+
+    public List<Question> get10QuestionByCateid(Integer pagenum, String cateid);
 }

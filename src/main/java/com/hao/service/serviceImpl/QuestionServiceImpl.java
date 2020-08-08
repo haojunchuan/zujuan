@@ -6,6 +6,7 @@ import com.hao.common.Constant;
 import com.hao.common.tools.DealwithQuestion;
 import com.hao.dao.QuestionDao;
 import com.hao.domain.Question;
+import com.hao.service.QuestionIndexService;
 import com.hao.service.QuestionService;
 import org.springframework.stereotype.Service;
 
@@ -21,10 +22,11 @@ public class QuestionServiceImpl implements QuestionService {
     @Resource
     private QuestionDao questionDao;
 
+    @Resource
+    private QuestionIndexService questionIndexService;
     @Override
     public Question getQuestionById(String id) {
         Question question=questionDao.selectById(id);
-
         if(question != null){
             //处理单选题的选项
             if(question.getQuestion_channel_type().equals("1")){
@@ -51,6 +53,13 @@ public class QuestionServiceImpl implements QuestionService {
         Page<Question> page=new Page<>(pagenum, Constant.PAGE_SIZE);
         Page<Question> questionPage = questionDao.selectPage(page, wrapper);
         return questionPage;
+    }
+
+    @Override
+    public List<Question> get10QuestionByCateid(Integer pagenum, String cateid){
+        List<String> ids = questionIndexService.selectIdByCate_page(pagenum, cateid);
+        List<Question> questions = questionDao.selectBatchIds(ids);
+        return questions;
     }
 
 
